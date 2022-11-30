@@ -8,6 +8,7 @@ mongoose.connect('mongodb://localhost/SportNutritions')
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var nutrition = require('./routes/nutrition');
 
 var app = express();
 
