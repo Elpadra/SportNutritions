@@ -7,7 +7,7 @@ router.get('/', function(req, res, next) {
 });
 
 /* Страница героев */
-router.get('/:nick', function(req, res, next) {
+router.get('/:nick', checkAuth,function(req, res, next) {
   Cat.findOne({nick:req.params.nick}, function(err,cat){
       if(err) return next(err)
       if(!cat) return next(new Error("Нет такого котенка в этом мультике"))
