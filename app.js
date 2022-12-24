@@ -4,12 +4,13 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mongoose = require('mongoose')
-mongoose.connect('mongodb://localhost/SportNutritions')
+mongoose.connect('mongodb://127.0.0.1:27017/SportNutritions')
+var nutrition = require('./routes/nutrition');
 var session = require("express-session")
+
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var nutrition = require('./routes/nutrition');
 
 var app = express();
 
@@ -25,14 +26,16 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(session({
-    secret: "ThreeCats",
+    secret: "nutrition",
     cookie:{maxAge:60*1000},
     resave: true,
     saveUninitialized: true	
 }))
 
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/nutrition', nutrition);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -47,7 +50,12 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.render('error',
+  {
+    picture: "../images/error.png",
+    title: 'ошибка',
+    menu:[]
+  });
 });
 
 module.exports = app;
