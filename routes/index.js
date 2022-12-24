@@ -3,10 +3,8 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    req.session.greeting = "Hi!!!"
-    res.render('index', { title: 'Express', menu:menu });
+    res.render('index', { title: 'Express', menu:menu, counter:req.session.counter });
 });
-
 
 
 /* Страница протеина */
